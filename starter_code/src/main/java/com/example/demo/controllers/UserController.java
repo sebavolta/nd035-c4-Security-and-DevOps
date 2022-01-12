@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
-	private CartRepository cartRepository;
+	CartRepository cartRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;

@@ -58,7 +58,6 @@ public class UserControllerTest {
         userRequest.setConfirmPassword("test1234");
 
 
-
         ResponseEntity<User> response = this.userController.createUser(userRequest);
 
         Assertions.assertNotNull(response);
@@ -69,5 +68,15 @@ public class UserControllerTest {
         Assertions.assertEquals("testuser", user.getUsername());
     }
 
+    @Test
+    public void createUserWrongPasswordTest() {
+        CreateUserRequest userRequest = new CreateUserRequest();
+        userRequest.setUsername("someuser");
+        userRequest.setPassword("short");
+        userRequest.setConfirmPassword("short");
 
+        ResponseEntity<User> response = this.userController.createUser(userRequest);
+
+        Assertions.assertEquals(400, response.getStatusCodeValue());
+    }
 }

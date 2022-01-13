@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,29 +35,20 @@ public class UserControllerTest {
     @Mock
     UserRepository userRepository;
 
-    /*@Mock
-    CartRepository cartRepository;*/
-
-    @Mock
-    BCryptPasswordEncoder encoder;
 
     @Before
     public void setUp() {
-
+        this.userRepository = mock(UserRepository.class);
         MockitoAnnotations.initMocks(this);
     }
 
 
     @Test
     public void createUserTest() {
-        //when(this.encoder.encode("test1234")).thenReturn("asdasdsaasd154546");
-        //when(cartRepository.save(new Cart())).thenReturn(new Cart());
-
         CreateUserRequest userRequest = new CreateUserRequest();
         userRequest.setUsername("testuser");
         userRequest.setPassword("test1234");
         userRequest.setConfirmPassword("test1234");
-
 
         ResponseEntity<User> response = this.userController.createUser(userRequest);
 
@@ -78,5 +70,29 @@ public class UserControllerTest {
         ResponseEntity<User> response = this.userController.createUser(userRequest);
 
         Assertions.assertEquals(400, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void findByUserNameNotFoundTest() {
+        ResponseEntity<User> response = this.userController.findByUserName("testuser");
+
+        Assertions.assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void findByUserNameTest() {
+        CreateUserRequest userRequest = new CreateUserRequest();
+        userRequest.setUsername("someuser");
+        userRequest.setPassword("test1234");
+        userRequest.setConfirmPassword("test1234");
+
+        this.userController.createUser(userRequest);
+
+        ResponseEntity<User> response = this.userController.findByUserName("someuser");
+
+        System.out.println(response.getBody());
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(200, response.getStatusCodeValue());
     }
 }

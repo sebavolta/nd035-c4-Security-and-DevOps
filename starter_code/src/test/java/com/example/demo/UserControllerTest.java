@@ -95,4 +95,27 @@ public class UserControllerTest {
         Assertions.assertNotNull(response);
         Assertions.assertEquals(200, response.getStatusCodeValue());
     }
+
+    @Test
+    public void findByUserIdNotFoundTest() {
+        ResponseEntity<User> response = this.userController.findById(2L);
+
+        Assertions.assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void findByUserIdTest() {
+        CreateUserRequest userRequest = new CreateUserRequest();
+        userRequest.setUsername("another");
+        userRequest.setPassword("test1234");
+        userRequest.setConfirmPassword("test1234");
+
+        ResponseEntity<User> responseUser = this.userController.createUser(userRequest);
+
+
+        ResponseEntity<User> response = this.userController.findById(responseUser.getBody().getId());
+
+        Assertions.assertEquals(200, response.getStatusCodeValue());
+        Assertions.assertEquals("another", response.getBody().getUsername());
+    }
 }

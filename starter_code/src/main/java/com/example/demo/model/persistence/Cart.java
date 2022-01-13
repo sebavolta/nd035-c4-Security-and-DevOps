@@ -20,7 +20,7 @@ public class Cart {
 	@Column
 	private long id;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JsonProperty
 	@Column
     private List<Item> items;

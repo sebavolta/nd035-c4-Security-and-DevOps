@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
 import com.example.demo.controllers.UserController;
 import com.example.demo.model.persistence.Cart;
@@ -98,7 +98,7 @@ public class UserControllerTest {
 
     @Test
     public void findByUserIdNotFoundTest() {
-        ResponseEntity<User> response = this.userController.findById(2L);
+        ResponseEntity<User> response = this.userController.findById(555L);
 
         Assertions.assertEquals(404, response.getStatusCodeValue());
     }

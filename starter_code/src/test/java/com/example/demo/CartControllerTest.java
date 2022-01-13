@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo;
 
 import com.example.demo.controllers.CartController;
 import com.example.demo.controllers.UserController;

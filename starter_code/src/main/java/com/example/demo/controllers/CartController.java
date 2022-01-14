@@ -40,13 +40,13 @@ public class CartController {
 	public ResponseEntity<Cart> addTocart(@RequestBody ModifyCartRequest request) {
 		User user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
-			log.info("Item not added to cart due to the user was not found for user name " + request.getUsername());
+			log.error("Item not added to cart due to the user was not found for user name " + request.getUsername());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		Optional<Item> item = itemRepository.findById(request.getItemId());
 		if(!item.isPresent()) {
-			log.info("Item not added to cart due to it was not found with id " + request.getItemId());
+			log.error("Item not added to cart due to it was not found with id " + request.getItemId());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -55,7 +55,7 @@ public class CartController {
 			.forEach(i -> cart.addItem(item.get()));
 		cartRepository.save(cart);
 
-		log.info("Item added to cart for user name" + request.getUsername());
+		log.info("Item added to cart for user name " + request.getUsername());
 
 		return ResponseEntity.ok(cart);
 	}
@@ -64,13 +64,13 @@ public class CartController {
 	public ResponseEntity<Cart> removeFromcart(@RequestBody ModifyCartRequest request) {
 		User user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
-			log.info("Item not removed from cart due to the user was not found for user name " + request.getUsername());
+			log.error("Item not removed from cart due to the user was not found for user name " + request.getUsername());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		Optional<Item> item = itemRepository.findById(request.getItemId());
 		if(!item.isPresent()) {
-			log.info("Item not removed from cart due to it was not found with id " + request.getItemId());
+			log.error("Item not removed from cart due to it was not found with id " + request.getItemId());
 
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
@@ -79,7 +79,7 @@ public class CartController {
 			.forEach(i -> cart.removeItem(item.get()));
 		cartRepository.save(cart);
 
-		log.info("Item removed from cart for user name" + request.getUsername());
+		log.info("Item removed from cart for user name " + request.getUsername());
 
 		return ResponseEntity.ok(cart);
 	}

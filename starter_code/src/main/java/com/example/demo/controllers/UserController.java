@@ -56,14 +56,14 @@ public class UserController {
 				!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())){
 			//System.out.println("Error - Either length is less than 7 or pass and conf pass do not match. Unable to create ",
 			//		createUserRequest.getUsername());
-			log.info("User creation failed due to error length or password don't match for user name " + createUserRequest.getUsername());
+			log.error("User creation failed due to error length or password don't match for user name " + createUserRequest.getUsername());
 
 			return ResponseEntity.badRequest().build();
 		}
 		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 		userRepository.save(user);
 
-		log.info("User successfully created with username" + createUserRequest.getUsername());
+		log.info("User successfully created with username " + createUserRequest.getUsername());
 
 		return ResponseEntity.ok(user);
 	}

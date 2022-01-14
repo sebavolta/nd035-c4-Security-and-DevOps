@@ -34,7 +34,7 @@ public class OrderController {
 	public ResponseEntity<UserOrder> submit(@PathVariable String username) {
 		User user = userRepository.findByUsername(username);
 		if(user == null) {
-			log.info("Order not submitted for user name " + username);
+			log.error("Order not submitted for user name " + username);
 
 			return ResponseEntity.notFound().build();
 		}
@@ -50,7 +50,7 @@ public class OrderController {
 	public ResponseEntity<List<UserOrder>> getOrdersForUser(@PathVariable String username) {
 		User user = userRepository.findByUsername(username);
 		if(user == null) {
-			log.info("Orders history not found for user name " + username);
+			log.error("Orders history not found for user name " + username);
 
 			return ResponseEntity.notFound().build();
 		}
